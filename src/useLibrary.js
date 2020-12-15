@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-export function useLibray(varName, src, props = {}) {
+export function useLibrary(varName, src, props = {}) {
     const library = useRef(window[varName])
     const [status, setStatus] = useState(library.current ? 'load' : 'try')
 

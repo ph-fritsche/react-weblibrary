@@ -1,9 +1,9 @@
 import React from 'react'
 import { act, render, waitFor } from '@testing-library/react'
-import { useLibray } from '../src/useLibrary'
+import { useLibrary } from '../src/useLibrary'
 
 function TestComponent({varName, src, testRef}) {
-    const [, status] = testRef.current = useLibray(varName, src)
+    const [, status] = testRef.current = useLibrary(varName, src)
 
     return <span data-testid="status">{status}</span>
 }
