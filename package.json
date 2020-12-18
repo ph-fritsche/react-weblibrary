@@ -8,11 +8,14 @@
     "files": [
         "dist/"
     ],
-    "dependencies": {},
+    "dependencies": {
+        "ts-essentials": "^7.0.1"
+    },
     "devDependencies": {
         "@ph.fritsche/eslint-config": "^0.1.1",
         "@testing-library/jest-dom": "^5.11.6",
         "@testing-library/react": "^11.2.2",
+        "@types/react": "^17.0.0",
         "eslint": "^7.15.0",
         "jest": "^26.6.3",
         "jest-dom": "^4.0.0",
