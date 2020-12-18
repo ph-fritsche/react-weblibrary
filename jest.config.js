@@ -10,12 +10,16 @@ module.exports = {
         runScripts: 'dangerously',
     },
     testMatch: [
-        '<rootDir>/test/**/*.{js,jsx}',
+        '<rootDir>/test/**/*.{js,jsx,ts,tsx}',
     ],
     testPathIgnorePatterns: [
-        '/_.*(?<!.test.js)$',
+        '/_.*(?<!\\.test\\.[jt]sx?)$',
     ],
+    transform: {
+        '\\.([jt]sx?)$': 'ts-jest',
+    },
     transformIgnorePatterns: [
+        '/node_modules/',
     ],
     setupFilesAfterEnv: [
         // "<rootDir>/test/_setup.js",
