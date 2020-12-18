@@ -4,6 +4,9 @@
     "keywords": [
         "script"
     ],
+    "repository": "https://github.com/ph-fritsche/react-weblibrary.git",
+    "author": "Philipp Fritsche",
+    "license": "MIT",
     "main": "dist/index.js",
     "files": [
         "dist/"
