@@ -2,7 +2,7 @@ module.exports = {
     verbose: true,
     collectCoverage: true,
     collectCoverageFrom: [
-        'src/**/*.{js,jsx}',
+        'src/**/*.{js,jsx,ts,tsx}',
     ],
     coveragePathIgnorePatterns: [],
     testEnvironmentOptions: {
