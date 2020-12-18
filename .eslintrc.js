@@ -1,5 +1,5 @@
 module.exports = {
     extends: [
-        '@ph-fritsche/eslint-config-react',
+        '@ph.fritsche/eslint-config',
     ],
 }
