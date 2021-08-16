@@ -6,8 +6,8 @@ Another react hook for loading scripts from the web
 import { useWebLibrary } from 'react-weblibrary'
 
 function MyComponent() {
-   // expect the script from https://example.com/someLibrary to define window.$
-   // if the global exists (e.g. because the script is already requested in <head>, the script will not be requested
+   // Expect the script from https://example.com/someLibrary to define `window.$`.
+   // If the global exists (e.g. because the script is already requested in <head>), the script will not be requested again.
    const [someLibrary, status] = useWebLibrary('$', 'https://example.com/someLibrary')
 
    if (!someLibrary) {
