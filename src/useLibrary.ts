@@ -17,7 +17,7 @@ export function useLibrary(varName: string, src: string, props: { [k in Writable
         }
 
         const el = document.createElement('script')
-        el.id = 'script-' + btoa(src) + Math.random()
+        el.id = 'script-' + Buffer.from(src).toString('base64') + Math.random()
         el.src = src
 
         Object.keys(props).forEach(k => {
