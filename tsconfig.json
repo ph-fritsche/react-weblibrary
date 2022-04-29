@@ -16,6 +16,8 @@
         "allowJs": true,
         "checkJs": false,
         "esModuleInterop": true,
+
+        "types": [],
     },
     "include": [
         "src/*",
