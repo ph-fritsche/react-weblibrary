@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { useLibrary } from '../src/useLibrary'
 
 function TestComponent({varName, src, testRef}) {
@@ -19,63 +19,60 @@ it('return existing library object', () => {
     expect(ref.current[0]).toBe(window.foo)
 })
 
-it('load library from url', () => {
+it('load library from url', async () => {
     window.exampleLibrary = undefined
 
     const ref = {}
 
-    return act(async () => {
-        render(<TestComponent testRef={ref} varName="exampleLibrary" src="https://ph-fritsche.github.io/react-weblibrary/exampleLibrary.js" />)
+    render(<TestComponent testRef={ref} varName="exampleLibrary" src="https://ph-fritsche.github.io/react-weblibrary/exampleLibrary.js" />)
 
-        expect(ref.current[1]).toBe('try')
-        expect(ref.current[0]).toBe(undefined)
+    await waitFor(() => expect(ref.current[1]).toEqual('try'))
 
-        await waitFor(() => expect(ref.current[1]).toEqual('load'))
+    expect(ref.current[0]).toBe(undefined)
 
-        expect(ref.current[0]).toBeTruthy()
-        expect(typeof(ref.current[0].echo)).toBe('function')
-        expect(ref.current[0].echo('foo')).toBe('foo')
-    })
+    await waitFor(() => expect(ref.current[1]).toEqual('load'))
+
+    expect(ref.current[0]).toBeTruthy()
+    expect(typeof(ref.current[0].echo)).toBe('function')
+    expect(ref.current[0].echo('foo')).toBe('foo')
 })
 
-it('fail loading library from url', () => {
+it('fail loading library from url', async () => {
     window.exampleLibrary = undefined
 
     const ref = {}
     const error = jest.spyOn(console, 'error').mockImplementation(() => {})
 
-    return act(async () => {
-        render(<TestComponent testRef={ref} varName="exampleLibrary" src="https://ph-fritsche.github.io/react-weblibrary/nonExistingLibrary.js" />)
+    render(<TestComponent testRef={ref} varName="exampleLibrary" src="https://ph-fritsche.github.io/react-weblibrary/nonExistingLibrary.js" />)
 
-        expect(ref.current[1]).toBe('try')
-        expect(ref.current[0]).toBe(undefined)
+    await waitFor(() => expect(ref.current[1]).toEqual('try'))
 
-        await waitFor(() => expect(ref.current[1]).toEqual('error'))
+    expect(ref.current[0]).toBe(undefined)
 
-        // jsdom calls console.error when resource can not be found
-        expect(error).toBeCalled()
+    await waitFor(() => expect(ref.current[1]).toEqual('error'))
 
-        ref.current[2]() // tryAgain
+    // jsdom calls console.error when resource can not be found
+    expect(error).toBeCalled()
 
-        expect(ref.current[1]).toBe('try')
+    ref.current[2]() // tryAgain
 
-        await waitFor(() => expect(ref.current[1]).toEqual('error'))
+    await waitFor(() => expect(ref.current[1]).toEqual('try'))
 
-        error.mockRestore()
-    })
+    await waitFor(() => expect(ref.current[1]).toEqual('error'))
+
+    error.mockRestore()
 })
 
-it('fail with script not providing variable', () => {
+it('fail with script not providing variable', async () => {
     window.foo = undefined
 
     const ref = {}
 
-    return act(async () => {
-        render(<TestComponent testRef={ref} varName="foo" src="https://ph-fritsche.github.io/react-weblibrary/exampleLibrary.js" />)
+    render(<TestComponent testRef={ref} varName="foo" src="https://ph-fritsche.github.io/react-weblibrary/exampleLibrary.js" />)
 
-        expect(ref.current[1]).toBe('try')
-        expect(ref.current[0]).toBe(undefined)
+    await waitFor(() => expect(ref.current[1]).toEqual('try'))
 
-        await waitFor(() => expect(ref.current[1]).toEqual('error'))
-    })
+    expect(ref.current[0]).toBe(undefined)
+
+    await waitFor(() => expect(ref.current[1]).toEqual('error'))
 })
