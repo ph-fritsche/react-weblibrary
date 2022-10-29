@@ -5,8 +5,8 @@ function getFromWindow(varName: string) {
     return (window as unknown as {[k: string]: unknown})[varName]
 }
 
-export function useLibrary(varName: string, src: string, props: { [k in WritableKeys<HTMLScriptElement>]?: HTMLScriptElement[k] } = {})
-    : [library: unknown, status: string, tryAgain: () => void]
+export function useLibrary<T>(varName: string, src: string, props: { [k in WritableKeys<HTMLScriptElement>]?: HTMLScriptElement[k] } = {})
+    : [library: T, status: string, tryAgain: () => void]
 {
     const library = useRef(getFromWindow(varName))
     const [status, setStatus] = useState(library.current ? 'load' : 'try')
